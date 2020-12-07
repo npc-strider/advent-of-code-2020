@@ -21,4 +21,15 @@ def f(li,count):
             count += k
     return count
 
-print( f(dictionary['shiny gold'],0) )
+print( f(dictionary['shiny gold'],0) ) #Part B
+
+def g(li):
+    for u in li:
+        if u == 'shiny gold':
+            return True
+        else:
+            if g(dictionary[u]) == True:
+                return True
+
+d = {x:g(dictionary[x]) for x in dictionary}
+print(len({x for x in d if (d[x] == True)})) #Part A
