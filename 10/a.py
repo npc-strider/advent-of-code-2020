@@ -12,21 +12,19 @@ def a(transformers):
         v_ = min(set(range(v+1,v+4)).intersection(transformers))
         dv.append(v_ - v)
         v = v_
-        # print(dv)
-
     count = dict(Counter(dv))
     return count[3]*count[1]
 
 def b(c, v, transformers):
     for v_ in set(range(v+1,v+4)).intersection(lines):
-        # print(v_)
         if v_ == max(transformers):
             c += 1
         else:
             c = b(c, v_, transformers)
     return c
-# print(b(0, 0, lines)) #This is a recursive solution. IT works but it'll take an eternity to go through the whole list of transformers.
-                        #My solution: Split the set by 'gaps' (where there is only one path through to the next number), then multiply together
+# print(b(0, 0, lines))
+##  This is a recursive solution. IT works but it'll take an eternity to go through the whole list of transformers.
+##  My solution: Split the set by 'gaps' (where there is only one path through to the next number), then multiply together. defintely not the most optimal but it's logical for me and it works! :)
 def b_optimized(transformers):
     rel = { v: set(range(v+1,v+4)).intersection(transformers) for v in transformers }
     rel.pop(max(transformers))
