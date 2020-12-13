@@ -12,13 +12,13 @@ def a(d):    #To be honest, I could've done this way quicker manually and got on
 print(a(d))
 
 def b(d):
-    d = [ [-y,int(d[y])] for y in {i:d[i] for i in range(len(d))} if d[y] != 'x']
-    [ print(x) for x in d ] # generate numbers
+    d = [ ',(t+'+str(y)+')mod'+str(d[y])+'=0' for y in {i:d[i] for i in range(len(d))} if d[y] != 'x']
+    return ''.join(d)[1:]
 
 
 # I'm a math noob, so I just saw what everyone else is talking about and found this chinese remainder theorem.
 # Why does this work? I DONT KNOW.
-# I'll probably learn this when I get some formal CS education.
+# I'll probably learn this when I get some formal CS education, so for now I'm just giving myself a rest for this part.
 # Used a solver for that.
 
 # x = 760171380521445
@@ -32,4 +32,4 @@ def b(d):
 # x ≡ −54 mod 37
 # x ≡ −67 mod 19
  
-b(d[1])
+print(b(d[1]))
