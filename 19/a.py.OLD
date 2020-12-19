@@ -1,0 +1,52 @@
+from copy import deepcopy
+import itertools
+
+def unpack(table):
+    replacable = []
+    replacable_idx = []
+    for i in range(len(table)):
+        if type(table[i]) == type([]):
+            replacable.append(list(itertools.product(*table[i])))
+            replacable_idx.append(i)
+
+    solutions = []
+    for x in list(itertools.product(*replacable)):
+        t_ = deepcopy(table)
+        i = 0
+        for y in x:
+            t_[replacable_idx[i]] = list(y)
+            i += 1
+        solutions.append(list(itertools.chain(*t_)))
+    return solutions
+
+def unpackrules(rules): #You know the rules, and so do I
+    for rule_n in rules:
+        rule = rules[rule_n]
+        for j in range(len(rule)):
+            subrule = rule[j]
+            for i in range(len(subrule)):
+                if subrule[i] in list(ab.keys()):
+                    subrule[i] = ab.get(subrule[i])
+                else:
+                    subrule[i] = rules[subrule[i]]
+            rule[j] = subrule
+        rules[rule_n] = unpack(rule)
+    return rules
+
+rules = { y[0]:[ z.split(' ') for z in y[1].split(' | ') ] for x in open('input_rules').read().splitlines() if (y := x.split(': ')) }
+ab = { x:rules[x][0][0].replace('"','') for x in rules if (rules[x][0][0] == '"a"' or rules[x][0][0] == '"b"')}
+[ rules.pop(x) for x in ab ]
+
+print(unpackrules(rules))
+
+        
+
+# print(unpack(['a', [['2', '3', '76'], ['3', '2']], 'b', [['2', '3'], ['3', '2']], [['2', '3'], ['3', '2']]]))
+# print(list(itertools.permutations(['a', [['2', '3', '76'], ['3', '2']], 'b', [['2', '3'], ['3', '2']], [['2', '3'], ['3', '2']]])))
+
+
+# rules = { x[0]:x[1] for x in [ rule.split(': ') for rule in open('input_rules').read().splitlines() ]}
+# ab = { x:rules[x].replace('"','') for x in rules if (rules[x] in ['"a"', '"b"'])}
+# rules.update(ab)
+# print(rules)
+# print(ab)
