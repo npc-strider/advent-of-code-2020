@@ -22,14 +22,10 @@ def getHexAdjacent(vec):
     })
     return adj
 
-def getHexAdjacentState(vec):
-    getHexAdjacent
-    return True
-
 def toggle(boolean):
     return (False if boolean else True)
 
-grid = {(0,0,0):{'state':False}}#'adj':getHexAdjacent((0,0,0)), 
+grid = {(0,0,0):{'state':False}}
 
 vectors = []
 for direction in directions:
@@ -39,12 +35,11 @@ for direction in directions:
         vec = getHexAdjacent(vec)[dir_]
     grid.update({vec:{'state':toggle(grid[vec]['state'] if vec in grid else False)}})
     vectors.append(vec)
-# print({x:vectors.count(x) for x in vectors})
-# print(len([vectors.count(x) for x in vectors if (vectors.count(x) % 2 == 1)]))
 
 #Part 1
 print(len([ x for x in grid if (grid[x]['state'] == True)])) # Black => True, white => false
 
+#Part 2
 grid_ = deepcopy(grid)  #expand our space by one hextile in each direction
 for cell in grid:
     adj = getHexAdjacent(cell)
@@ -66,16 +61,11 @@ while i < 100:
                 if grid[cell_]['state'] == True:
                     c+=1
             else:
-                # print(len(grid_))
                 grid_.update({cell_:{'state':False}})
 
         if grid[cell]['state'] == True and (c == 0 or c > 2):
-            # print('false')
             grid_[cell]['state'] = False
         elif grid[cell]['state'] == False and c == 2:
-            # print('true')
             grid_[cell]['state'] = True
-    # print(len(grid))
-    # print(len(grid_))
     i+=1
 print(len([ x for x in grid_ if (grid_[x]['state'] == True)]))
